@@ -1,0 +1,36 @@
+C:\Users\Acer\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\bin\Debug\DVLD_Buisness.dll
+C:\Users\Acer\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\bin\Debug\DVLD_Buisness.pdb
+C:\Users\Acer\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.AssemblyReference.cache
+C:\Users\Acer\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.CoreCompileInputs.cache
+C:\Users\Acer\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.dll
+C:\Users\Acer\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.pdb
+C:\Users\Acer\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\bin\Debug\DVLD_DataAccess.dll
+C:\Users\Acer\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\bin\Debug\DVLD_DataAccess.pdb
+C:\Users\Acer\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.CopyComplete
+C:\Users\USER\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\bin\Debug\DVLD_Buisness.dll
+C:\Users\USER\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\bin\Debug\DVLD_Buisness.pdb
+C:\Users\USER\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\bin\Debug\DVLD_DataAccess.dll
+C:\Users\USER\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\bin\Debug\DVLD_DataAccess.pdb
+C:\Users\USER\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.AssemblyReference.cache
+C:\Users\USER\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.CoreCompileInputs.cache
+C:\Users\USER\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.CopyComplete
+C:\Users\USER\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.dll
+C:\Users\USER\Dropbox\Personal\Advices\2021\19 - Full Real Project\Project\DVLD_Buisness\obj\Debug\DVLD_Buisness.pdb
+D:\FileCPP\TeacherProject\DVLD_Buisness\bin\Debug\DVLD_Buisness.dll
+D:\FileCPP\TeacherProject\DVLD_Buisness\bin\Debug\DVLD_Buisness.pdb
+D:\FileCPP\TeacherProject\DVLD_Buisness\bin\Debug\DVLD_DataAccess.dll
+D:\FileCPP\TeacherProject\DVLD_Buisness\bin\Debug\DVLD_DataAccess.pdb
+D:\FileCPP\TeacherProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.AssemblyReference.cache
+D:\FileCPP\TeacherProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.CoreCompileInputs.cache
+D:\FileCPP\TeacherProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.CopyComplete
+D:\FileCPP\TeacherProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.dll
+D:\FileCPP\TeacherProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.pdb
+D:\FileCPP\MyProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.AssemblyReference.cache
+D:\FileCPP\MyProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.CoreCompileInputs.cache
+D:\FileCPP\MyProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.dll
+D:\FileCPP\MyProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.pdb
+D:\FileCPP\MyProject\DVLD_Buisness\bin\Debug\DVLD_Buisness.dll
+D:\FileCPP\MyProject\DVLD_Buisness\bin\Debug\DVLD_Buisness.pdb
+D:\FileCPP\MyProject\DVLD_Buisness\bin\Debug\DVLD_DataAccess.dll
+D:\FileCPP\MyProject\DVLD_Buisness\bin\Debug\DVLD_DataAccess.pdb
+D:\FileCPP\MyProject\DVLD_Buisness\obj\Debug\DVLD_Buisness.csproj.CopyComplete
