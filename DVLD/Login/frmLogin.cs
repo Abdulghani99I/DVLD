@@ -18,8 +18,26 @@ namespace DVLD.Login
         {
             InitializeComponent();
         }
-
        
+        private void frmLogin_Load(object sender, EventArgs e)
+        {
+            string UserName = "", Password = "";
+
+            if (clsGlobal.GetStoredCredential(ref UserName, ref Password))
+            {
+                if (string.IsNullOrEmpty(UserName)|| string.IsNullOrEmpty(Password)) return;
+
+                txtUserName.Text = UserName;
+                txtPassword.Text = Password;
+                chkRememberMe.Checked = true;
+                btnLogin_Click(null, null);
+            }
+            else
+            {
+                chkRememberMe.Checked = false;
+            }
+        }
+        
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -29,7 +47,7 @@ namespace DVLD.Login
         {
             clsUser user= clsUser.FindByUsernameAndPassword(txtUserName.Text.Trim(),txtPassword.Text.Trim());
 
-            if (user != null) 
+            if (user != null)
             {
 
                 //incase the user is not active
@@ -70,21 +88,5 @@ namespace DVLD.Login
 
         }
 
-        private void frmLogin_Load(object sender, EventArgs e)
-        {
-            string UserName = "", Password = "";
-
-            if (clsGlobal.GetStoredCredential(ref UserName, ref Password))
-            {
-                txtUserName.Text = UserName;
-                txtPassword.Text = Password;
-                chkRememberMe.Checked = true;
-                btnLogin_Click(null, null);
-            }
-            else
-            {
-                chkRememberMe.Checked = false;
-            }
-        }
     }
 }

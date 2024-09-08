@@ -22,3 +22,9 @@ D:\FileCPP\MyProject\DVLD_DataAccess\obj\Debug\DVLD_DataAccess.csproj.AssemblyRe
 D:\FileCPP\MyProject\DVLD_DataAccess\obj\Debug\DVLD_DataAccess.csproj.CoreCompileInputs.cache
 D:\FileCPP\MyProject\DVLD_DataAccess\obj\Debug\DVLD_DataAccess.dll
 D:\FileCPP\MyProject\DVLD_DataAccess\obj\Debug\DVLD_DataAccess.pdb
+D:\DVLD\DVLD_DataAccess\bin\Debug\DVLD_DataAccess.dll
+D:\DVLD\DVLD_DataAccess\bin\Debug\DVLD_DataAccess.pdb
+D:\DVLD\DVLD_DataAccess\obj\Debug\DVLD_DataAccess.csproj.AssemblyReference.cache
+D:\DVLD\DVLD_DataAccess\obj\Debug\DVLD_DataAccess.csproj.CoreCompileInputs.cache
+D:\DVLD\DVLD_DataAccess\obj\Debug\DVLD_DataAccess.dll
+D:\DVLD\DVLD_DataAccess\obj\Debug\DVLD_DataAccess.pdb
