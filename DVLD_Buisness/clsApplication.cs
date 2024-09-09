@@ -10,6 +10,7 @@ namespace DVLD_DataAccess
 {
     public class clsApplication
     {
+        
         enum enMode { AddNew, Update}
         
         enMode Mode = enMode.AddNew;
@@ -36,7 +37,6 @@ namespace DVLD_DataAccess
             this.ApplicaitonID = -1;
             this.ApplicationType = 0;
             this.PersonID = -1;
-            
             this.ApplicationStatus = 0;
             this.ApplicationDate = DateTime.MinValue;
             this.LastStausDate = DateTime.MinValue;

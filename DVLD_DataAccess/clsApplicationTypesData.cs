@@ -80,7 +80,7 @@ namespace DVLD_DataAccess
                     }
                     catch (Exception ex)
                     {
-                        //Console.WriteLine("Error: " + ex.Message);
+                        clsGlobal.LogError(ex.Message);
                         isFound = false;
                     }
                 }
@@ -126,7 +126,7 @@ namespace DVLD_DataAccess
         //            }
         //            catch (Exception ex)
         //            {
-        //                //Console.WriteLine("Error: " + ex.Message);
+        //                clsGlobal.LogError(ex.Message);
         //                isFound = false;
         //            }
         //        }

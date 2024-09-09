@@ -12,7 +12,7 @@ using static System.Windows.Forms.LinkLabel;
 
 namespace DVLD.Classes
 {
-    internal static  class clsGlobal
+    static  class clsGlobal
     {
         public static clsUser CurrentUser;
 

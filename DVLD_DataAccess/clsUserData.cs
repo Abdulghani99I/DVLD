@@ -24,38 +24,31 @@ namespace DVLD_DataAccess
             try
             {
                 connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    // The record was found
-                    isFound = true;
+                    if (reader.Read())
+                    {
+                        // The record was found
+                        isFound = true;
 
-                    PersonID = (int)reader["PersonID"];
-                    UserName = (string)reader["UserName"];
-                    Password = (string)reader["Password"];
-                    IsActive = (bool)reader["IsActive"];
+                        PersonID = (int)reader["PersonID"];
+                        UserName = (string)reader["UserName"];
+                        Password = (string)reader["Password"];
+                        IsActive = (bool)reader["IsActive"];
+                    }
+                    else
+                    {
+                        // The record was not found
+                        isFound = false;
+                    }
                 }
-                else
-                {
-                    // The record was not found
-                    isFound = false;
-                }
-
-                reader.Close();
-
-
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
-                
-                isFound = false;
+                clsGlobal.LogError(ex.Message);
             }
-            finally
-            {
-                connection.Close();
-            }
+
 
             return isFound;
         }
@@ -66,51 +59,44 @@ namespace DVLD_DataAccess
         {
             bool isFound = false;
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-
-            string query = "SELECT * FROM Users WHERE PersonID = @PersonID";
-
-            SqlCommand command = new SqlCommand(query, connection);
-
-            command.Parameters.AddWithValue("@PersonID", PersonID);
-
-            try
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
             {
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                string query = "SELECT * FROM Users WHERE PersonID = @PersonID";
 
-                if (reader.Read())
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    // The record was found
-                    isFound = true;
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
 
-                    UserID = (int)reader["UserID"];
-                    UserName = (string)reader["UserName"];
-                    Password = (string)reader["Password"];
-                    IsActive = (bool)reader["IsActive"];
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // The record was found
+                                isFound = true;
 
+                                UserID = (int)reader["UserID"];
+                                UserName = (string)reader["UserName"];
+                                Password = (string)reader["Password"];
+                                IsActive = (bool)reader["IsActive"];
+                            }
+                            else
+                            {
+                                // The record was not found
+                                isFound = false;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        clsGlobal.LogError(ex.Message);
 
+                        isFound = false;
+                    }
                 }
-                else
-                {
-                    // The record was not found
-                    isFound = false;
-                }
-
-                reader.Close();
-
             }
-            catch (Exception ex)
-            {
-                //Console.WriteLine("Error: " + ex.Message);
-
-                isFound = false;
-            }
-            finally
-            {
-                connection.Close();
-            }
-
             return isFound;
         }
 
@@ -158,7 +144,7 @@ namespace DVLD_DataAccess
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
+                clsGlobal.LogError(ex.Message);
 
                 isFound = false;
             }
@@ -203,7 +189,7 @@ namespace DVLD_DataAccess
 
             catch (Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
+                clsGlobal.LogError(ex.Message);
 
             }
 
@@ -247,7 +233,7 @@ namespace DVLD_DataAccess
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
+                clsGlobal.LogError(ex.Message);
                 return false;
             }
 
@@ -327,7 +313,7 @@ namespace DVLD_DataAccess
             }
             catch (Exception ex)
             {
-                // Console.WriteLine("Error: " + ex.Message);
+                clsGlobal.LogError(ex.Message);
             }
             finally
             {
@@ -363,7 +349,7 @@ namespace DVLD_DataAccess
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
+                clsGlobal.LogError(ex.Message);
                 isFound = false;
             }
             finally
@@ -397,7 +383,7 @@ namespace DVLD_DataAccess
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
+                clsGlobal.LogError(ex.Message);
                 isFound = false;
             }
             finally
@@ -431,7 +417,7 @@ namespace DVLD_DataAccess
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
+                clsGlobal.LogError(ex.Message);
                 isFound = false;
             }
             finally
@@ -465,7 +451,7 @@ namespace DVLD_DataAccess
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
+                clsGlobal.LogError(ex.Message);
                 isFound = false;
             }
             finally
@@ -499,7 +485,7 @@ namespace DVLD_DataAccess
             }
             catch (Exception ex)
             {
-                //Console.WriteLine("Error: " + ex.Message);
+                clsGlobal.LogError(ex.Message);
                 return false;
             }
 
