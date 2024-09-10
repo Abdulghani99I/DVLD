@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Configuration;
 
 namespace DVLD_DataAccess
 {
-    static class clsDataAccessSettings
+    internal static class clsDataAccessSettings
     {
-        internal readonly static string ConnectionString = "Server=.;Database=MyDVLD;User Id=sa;Password=sa123456;";
+        internal readonly static string ConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
     }
 }
