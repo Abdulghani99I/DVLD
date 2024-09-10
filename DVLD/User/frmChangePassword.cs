@@ -52,7 +52,6 @@ namespace DVLD.User
             }
 
             ctrlUserCard1.LoadUserInfo(_UserID);
-
         }
 
         private void txtCurrentPassword_Validating(object sender, CancelEventArgs e)
@@ -69,7 +68,10 @@ namespace DVLD.User
                 errorProvider1.SetError(txtCurrentPassword, null);
             };
 
-            if (_User.Password != txtCurrentPassword.Text.Trim())
+            // Here we compare bettwen HashPassword and Current password (Entered User) convert to Hash Password
+            string CurrentHashPassword = clsGlobal.HashPassword(txtCurrentPassword.Text.Trim());
+
+            if (_User.HashPassword != CurrentHashPassword)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtCurrentPassword, "Current password is wrong!");
@@ -120,7 +122,9 @@ namespace DVLD.User
 
             //_User.Password = txtNewPassword.Text;
 
-            if (clsUser.ChangePassword(_UserID, txtNewPassword.Text))
+            string NewHashPassword = clsGlobal.HashPassword(txtNewPassword.Text.Trim());
+
+            if (clsUser.ChangePassword(_UserID, NewHashPassword))
             {
                 MessageBox.Show("Password Changed Successfully.",
                    "Saved.", MessageBoxButtons.OK, MessageBoxIcon.Information );

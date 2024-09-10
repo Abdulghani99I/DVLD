@@ -462,7 +462,7 @@ namespace DVLD_DataAccess
             return isFound;
         }
 
-        public static bool ChangePassword(int UserID, string NewPassword)
+        public static bool ChangePassword(int UserID, string NewHashPassword)
         {
 
             int rowsAffected = 0;
@@ -475,7 +475,7 @@ namespace DVLD_DataAccess
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@UserID", UserID);
-            command.Parameters.AddWithValue("@Password", NewPassword);
+            command.Parameters.AddWithValue("@Password", NewHashPassword);
 
             try
             {

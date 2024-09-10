@@ -45,7 +45,10 @@ namespace DVLD.Login
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            clsUser user= clsUser.FindByUsernameAndPassword(txtUserName.Text.Trim(),txtPassword.Text.Trim());
+            string Username = txtUserName.Text.Trim();
+            string HashPassword = clsGlobal.HashPassword(txtPassword.Text.Trim());
+
+            clsUser user = clsUser.FindByUsernameAndPassword(Username, HashPassword);
 
             if (user != null)
             {
@@ -53,7 +56,6 @@ namespace DVLD.Login
                 //incase the user is not active
                 if (!user.IsActive )
                 {
-
                     txtUserName.Focus();
                     MessageBox.Show("Your accound is not Active, Contact Admin.", "In Active Account", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -73,6 +74,33 @@ namespace DVLD.Classes
             catch
             {
                 return false;
+            }
+        }
+
+
+        public static bool VerifyPassword(string enteredPassword, string storedHashedPassword)
+        {
+            // Hash the entered password
+            string enteredPasswordHash = HashPassword(enteredPassword);
+
+            // Compare hashed passwords
+            return enteredPasswordHash == storedHashedPassword;
+        }
+
+        // Hash function (from the previous example)
+        public static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                byte[] hashBytes = sha256.ComputeHash(passwordBytes);
+
+                StringBuilder hashString = new StringBuilder();
+                foreach (byte b in hashBytes)
+                {
+                    hashString.Append(b.ToString("x2"));
+                }
+                return hashString.ToString();
             }
         }
     }
