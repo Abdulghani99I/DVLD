@@ -69,9 +69,9 @@ namespace DVLD.User
             };
 
             // Here we compare bettwen HashPassword and Current password (Entered User) convert to Hash Password
-            string CurrentHashPassword = clsGlobal.HashPassword(txtCurrentPassword.Text.Trim());
+            string CurrentPassword = txtCurrentPassword.Text.Trim();
 
-            if (_User.HashPassword != CurrentHashPassword)
+            if (_User.Password != clsGlobalBusiness.HashPassword(CurrentPassword))
             {
                 e.Cancel = true;
                 errorProvider1.SetError(txtCurrentPassword, "Current password is wrong!");
@@ -122,16 +122,14 @@ namespace DVLD.User
 
             //_User.Password = txtNewPassword.Text;
 
-            string NewHashPassword = clsGlobal.HashPassword(txtNewPassword.Text.Trim());
+            string Password = txtNewPassword.Text.Trim();
 
-            if (clsUser.ChangePassword(_UserID, NewHashPassword))
+            if (clsUser.ChangePassword(_UserID, Password))
             {
                 MessageBox.Show("Password Changed Successfully.",
                    "Saved.", MessageBoxButtons.OK, MessageBoxIcon.Information );
 
                 HandleTheFormAfterSaveNewPassword();
-
-                //_ResetDefualtValues();
             }
             else
             {

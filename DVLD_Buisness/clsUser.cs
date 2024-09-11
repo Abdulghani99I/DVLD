@@ -15,14 +15,14 @@ namespace DVLD_Buisness
 
         public clsPerson PersonInfo;
         public string UserName { set; get; }
-        public string HashPassword { set; get; }
+        public string Password { set; get; }
         public bool IsActive { set; get; }
      
         public clsUser()
         {     
             this.UserID = -1;
             this.UserName = "";
-            this.HashPassword = "";
+            this.Password = "";
             this.IsActive = true;
             Mode = enMode.AddNew;
         }
@@ -35,7 +35,7 @@ namespace DVLD_Buisness
             this.PersonID = PersonID;
             this.PersonInfo = clsPerson.Find(PersonID);
             this.UserName = Username;
-            this.HashPassword = Password;
+            this.Password = Password;
             this.IsActive = IsActive;
 
             Mode = enMode.Update;
@@ -45,8 +45,11 @@ namespace DVLD_Buisness
         {
             //call DataAccess Layer 
 
+            // before updating, we should Hash the password.
+            string HashPassword = clsGlobalBusiness.HashPassword(Password);
+
             this.UserID = clsUserData.AddNewUser(this.PersonID,this.UserName,
-                this.HashPassword,this.IsActive);
+                HashPassword, this.IsActive);
 
             return (this.UserID != -1);
         }
@@ -54,8 +57,11 @@ namespace DVLD_Buisness
         {
             //call DataAccess Layer 
 
+            // before updating, we should Hash the password.
+            string HashPassword = clsGlobalBusiness.HashPassword(this.Password);
+
             return clsUserData.UpdateUser(this.UserID,this.PersonID,this.UserName,
-                this.HashPassword,this.IsActive);
+               HashPassword, this.IsActive);
         }
 
         public static clsUser FindByUserID(int UserID)
@@ -89,15 +95,17 @@ namespace DVLD_Buisness
             else
                 return null;
         }
-        public static clsUser FindByUsernameAndPassword(string UserName,string HashPassword)
+        public static clsUser FindByUsernameAndPassword(string UserName,string Password)
         {
             int UserID = -1;
             int PersonID=-1;
 
             bool IsActive = false;
 
+            string HashPassword = clsGlobalBusiness.HashPassword(Password);
+
             bool IsFound = clsUserData.GetUserInfoByUsernameAndPassword
-                                (UserName , HashPassword,ref UserID,ref PersonID, ref IsActive);
+                                (UserName , HashPassword, ref UserID,ref PersonID, ref IsActive);
 
             if (IsFound)
                 //we return new object of that User with the right data
@@ -155,8 +163,9 @@ namespace DVLD_Buisness
             return clsUserData.IsUserExistForPersonID(PersonID);
         }
         
-        public static bool ChangePassword(int UserID, string NewHashPassword)
+        public static bool ChangePassword(int UserID, string Password)
         {
+            string NewHashPassword = clsGlobalBusiness.HashPassword(Password);
             return clsUserData.ChangePassword(UserID, NewHashPassword);
         }
     }

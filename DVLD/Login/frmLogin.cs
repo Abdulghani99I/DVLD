@@ -25,7 +25,7 @@ namespace DVLD.Login
 
             if (clsGlobal.GetStoredCredential(ref UserName, ref Password))
             {
-                if (string.IsNullOrEmpty(UserName)|| string.IsNullOrEmpty(Password)) return;
+                
 
                 txtUserName.Text = UserName;
                 txtPassword.Text = Password;
@@ -46,9 +46,9 @@ namespace DVLD.Login
         private void btnLogin_Click(object sender, EventArgs e)
         {
             string Username = txtUserName.Text.Trim();
-            string HashPassword = clsGlobal.HashPassword(txtPassword.Text.Trim());
+            string Password = txtPassword.Text.Trim();
 
-            clsUser user = clsUser.FindByUsernameAndPassword(Username, HashPassword);
+            clsUser user = clsUser.FindByUsernameAndPassword(Username, Password);
 
             if (user != null)
             {

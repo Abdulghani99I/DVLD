@@ -9,11 +9,12 @@ using System.Windows.Forms;
 using DVLD_Buisness;
 using Microsoft.Win32;
 using static System.Windows.Forms.LinkLabel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 
 namespace DVLD.Classes
 {
-    static  class clsGlobal
+    public static  class clsGlobal
     {
         public static clsUser CurrentUser;
 
@@ -61,10 +62,13 @@ namespace DVLD.Classes
                 {
                     Username = key.GetValue("Username", null) as string;
                     Password = key.GetValue("Password", null) as string;
-
+                    
                     key.Close();
 
-                    return true;
+                    if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+                        return false;
+                    else
+                        return true;
                 }
                 else
                 {
@@ -78,30 +82,5 @@ namespace DVLD.Classes
         }
 
 
-        public static bool VerifyPassword(string enteredPassword, string storedHashedPassword)
-        {
-            // Hash the entered password
-            string enteredPasswordHash = HashPassword(enteredPassword);
-
-            // Compare hashed passwords
-            return enteredPasswordHash == storedHashedPassword;
-        }
-
-        // Hash function (from the previous example)
-        public static string HashPassword(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-                byte[] hashBytes = sha256.ComputeHash(passwordBytes);
-
-                StringBuilder hashString = new StringBuilder();
-                foreach (byte b in hashBytes)
-                {
-                    hashString.Append(b.ToString("x2"));
-                }
-                return hashString.ToString();
-            }
-        }
     }
 }

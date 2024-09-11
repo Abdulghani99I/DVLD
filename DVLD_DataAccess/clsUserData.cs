@@ -157,7 +157,7 @@ namespace DVLD_DataAccess
         }
 
         public static int AddNewUser(int PersonID,  string UserName,
-             string Password,  bool IsActive)
+             string HashPassword,  bool IsActive)
         {
             //this function will return the new person id if succeeded and -1 if not.
             int UserID = -1;
@@ -172,7 +172,7 @@ namespace DVLD_DataAccess
 
             command.Parameters.AddWithValue("@PersonID", PersonID);
             command.Parameters.AddWithValue("@UserName", UserName);
-            command.Parameters.AddWithValue("@Password", Password);
+            command.Parameters.AddWithValue("@Password", HashPassword);
             command.Parameters.AddWithValue("@IsActive", IsActive);
 
             try
@@ -203,7 +203,7 @@ namespace DVLD_DataAccess
 
 
         public static bool UpdateUser(int UserID, int PersonID, string UserName,
-             string Password, bool IsActive)
+             string HashPassword, bool IsActive)
         {
 
             int rowsAffected = 0;
@@ -220,7 +220,7 @@ namespace DVLD_DataAccess
 
             command.Parameters.AddWithValue("@PersonID", PersonID);
             command.Parameters.AddWithValue("@UserName", UserName);
-            command.Parameters.AddWithValue("@Password", Password);
+            command.Parameters.AddWithValue("@Password", HashPassword);
             command.Parameters.AddWithValue("@IsActive", IsActive);
             command.Parameters.AddWithValue("@UserID", UserID);
 

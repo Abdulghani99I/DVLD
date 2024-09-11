@@ -87,7 +87,7 @@ namespace DVLD.User
             lblUserID.Text = _User.UserID.ToString();
             txtUserName.Text = _User.UserName;
             txtPassword.Text = string.Empty;
-            txtConfirmPassword.Text = _User.HashPassword;
+            txtConfirmPassword.Text = _User.Password;
             chkIsActive.Checked = _User.IsActive;
             ctrlPersonCardWithFilter1.LoadPersonInfo(_User.PersonID);
         }
@@ -105,9 +105,10 @@ namespace DVLD.User
 
             _User.PersonID = ctrlPersonCardWithFilter1.PersonID;
             _User.UserName = txtUserName.Text.Trim();
-            _User.HashPassword = clsGlobal.HashPassword(txtPassword.Text.Trim());
+            _User.Password = txtPassword.Text.Trim();
             _User.IsActive = chkIsActive.Checked;
 
+            
             if (_User.Save())
             {
                 HandleFormAfterSave();
