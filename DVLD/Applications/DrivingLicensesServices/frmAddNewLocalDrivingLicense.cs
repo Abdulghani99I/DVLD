@@ -66,7 +66,7 @@ namespace DVLD.Applications
             _InfoDrivingLicenseApplication = clsLocalDrivingLicense.Find(_DrivingLicenseApplicationID);
 
             ctrlPersonCardWithFilter1.LoadPersonInfo(_InfoDrivingLicenseApplication.PersonID);
-            lblDrivingLicenseApplicationID.Text = _InfoDrivingLicenseApplication.DrivingLicenseApplicationID.ToString();
+            lblDrivingLicenseApplicationID.Text = _InfoDrivingLicenseApplication.LocalDrivingLicenseApplicationID.ToString();
             lblApplicationDate.Text = _InfoDrivingLicenseApplication.ApplicationDate.ToString("yyyy/MM/dd");
             cbLicenseClasses.SelectedIndex = cbLicenseClasses.FindString(_InfoDrivingLicenseApplication.InfoLicenseClass.ClassName);
             lblApplicationFees.Text = _InfoDrivingLicenseApplication.InfoLicenseClass.ClassFees.ToString();
@@ -115,6 +115,15 @@ namespace DVLD.Applications
 
             clsLicenseClass LicenseClass = clsLicenseClass.Find(cbLicenseClasses.Text);
 
+            int ActiveApplicationID = clsApplication.GetActiveApplicationIDForLicenseClass(ctrlPersonCardWithFilter1.PersonID, clsApplicationType.enApplicationTypes.NewLocalDrivingLicenseService, LicenseClass.LicenseClassID);
+
+            if (ActiveApplicationID != -1)
+            {
+                MessageBox.Show("Choose another License Class, the selected Person Already have an active application for the selected class with id=" + ActiveApplicationID, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cbLicenseClasses.Focus();
+                return;
+            }
+
             _InfoDrivingLicenseApplication.ApplicationType = clsApplicationType.enApplicationTypes.NewLocalDrivingLicenseService;
             _InfoDrivingLicenseApplication.ApplicationStatus = clsApplication.enApplicationStatus.New;
             _InfoDrivingLicenseApplication.PersonID = ctrlPersonCardWithFilter1.PersonID;
@@ -127,7 +136,7 @@ namespace DVLD.Applications
 
             if (_InfoDrivingLicenseApplication.Save())
             {
-                lblDrivingLicenseApplicationID.Text = _InfoDrivingLicenseApplication.DrivingLicenseApplicationID.ToString();
+                lblDrivingLicenseApplicationID.Text = _InfoDrivingLicenseApplication.LocalDrivingLicenseApplicationID.ToString();
                 MessageBox.Show("Data Saved Successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 if (Mode == enMode.AddNew)

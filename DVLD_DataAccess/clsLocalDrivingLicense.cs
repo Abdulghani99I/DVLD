@@ -121,9 +121,9 @@ namespace DVLD_DataAccess
                                 ApplicaitonID = (int) reader["ApplicationID"];
                                 ApplicationTypeID = byte.Parse(reader["ApplicationTypeID"].ToString());
                                 PersonID = (int) reader["PersonID"];
-                                ApplicationStatu = byte.Parse(reader["ApplicationStatus"].ToString());
+                                ApplicationStatu = byte.Parse(reader["ApplicationStatu"].ToString());
                                 ApplicationDate = (DateTime)reader["ApplicationDate"];
-                                LastStausDate = (DateTime)reader["LastStausDate"];
+                                LastStausDate = (DateTime)reader["LastStatuDate"];
                                 PaidFees = float.Parse(reader["PaidFees"].ToString());
                                 CreateByUserID = (int)reader["CreatedByUserID"];
                             }
@@ -197,14 +197,8 @@ namespace DVLD_DataAccess
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
-            string query = @" DECLARE @ApplicationID INT;
-                              SELECT @ApplicationID = ApplicationID                 
-                              FROM LocalDrivingLicenseApplication
-                              WHERE DrivingLicenseApplicationID = @DrivingLicenseApplicationID;
-                              DELETE FROM LocalDrivingLicenseApplication
-                              DELETE FROM Applications
-                              WHERE ApplicationID = @ApplicationID;
-                              ";
+            string query = @" delete LocalDrivingLicenseApplication
+                              where DrivingLicenseApplicationID = @DrivingLicenseApplicationID;";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -224,7 +218,7 @@ namespace DVLD_DataAccess
             }
 
             // Because rowsAffected with two tables (Should delete two record)
-            return (rowsAffected > 1);
+            return (rowsAffected > 0);
         }
     }
 }

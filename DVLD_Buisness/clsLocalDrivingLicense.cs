@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DVLD_DataAccess;
 using static DVLD_Buisness.clsApplicationType;
-using static DVLD_DataAccess.clsApplication;
+
 
 namespace DVLD_Buisness
 {
@@ -22,7 +22,7 @@ namespace DVLD_Buisness
             return clsLocalDrivingLicenseData.GetAllLocalDrivingLicenses();
         }
 
-        public int DrivingLicenseApplicationID { set; get; }
+        public int LocalDrivingLicenseApplicationID { set; get; }
 
         public int LicensesClassID { set; get; }
 
@@ -30,7 +30,7 @@ namespace DVLD_Buisness
 
         public clsLocalDrivingLicense()
         {
-            this.DrivingLicenseApplicationID = -1;
+            this.LocalDrivingLicenseApplicationID = -1;
 
             Mode = enMode.AddNew;
         }
@@ -41,11 +41,11 @@ namespace DVLD_Buisness
              DateTime ApplicationDate, DateTime LastStausDate, float PaidFees, int CreateByUserID)
         {
 
-            this.DrivingLicenseApplicationID = DrivingLicenseApplicationID;
+            this.LocalDrivingLicenseApplicationID = DrivingLicenseApplicationID;
             this.LicensesClassID = LicenseClassID;
             this.InfoLicenseClass = clsLicenseClass.Find(LicenseClassID);
 
-            this.ApplicaitonID = ApplicaitonID;
+            this.ApplicationID = ApplicaitonID;
             this.ApplicationType = ApplicationType;
             this.PersonID = PersonID;
             this.ApplicationStatus = ApplicationStatus;
@@ -102,7 +102,6 @@ namespace DVLD_Buisness
                 //case enMode.Update:
 
                     //return _UpdateUser();
-
             }
 
             return false;
@@ -113,16 +112,25 @@ namespace DVLD_Buisness
             //call DataAccess Layer 
            
 
-            this.DrivingLicenseApplicationID = clsLocalDrivingLicenseData.AddNewDrvingLicenseApplication(this.ApplicaitonID, LicensesClassID);
+            this.LocalDrivingLicenseApplicationID = clsLocalDrivingLicenseData.AddNewDrvingLicenseApplication(this.ApplicationID, LicensesClassID);
 
-            return (this.DrivingLicenseApplicationID != -1);
+            return (this.LocalDrivingLicenseApplicationID != -1);
         }
 
-
-        public static bool Delete(int DrivingLicenseApplicationByID)
+        public bool Delete()
         {
-            return clsLocalDrivingLicenseData.Delete(DrivingLicenseApplicationByID);
-        }
+            bool isLocalDrivingLicenseApplicationDeleted = clsLocalDrivingLicenseData.Delete(LocalDrivingLicenseApplicationID);
 
+            bool isbaseApplicaionDeleted = base.Delete();
+
+            if (isLocalDrivingLicenseApplicationDeleted & isbaseApplicaionDeleted)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

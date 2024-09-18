@@ -151,22 +151,26 @@ namespace DVLD.Applications.DrivingLicensesServices
 
         private void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int ID = Convert.ToInt32(dgvLicenseApplications.CurrentRow.Cells[0].Value);
+            if (MessageBox.Show("Are you sure do want to delete this application?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
 
-            if (MessageBox.Show($"Are you sure, delete this Application ID: " + ID, "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            int LocalDrivingLicenseApplicationID = (int)dgvLicenseApplications.CurrentRow.Cells[0].Value;
+
+            clsLocalDrivingLicense LocalDrivingLicenseApplication =
+                clsLocalDrivingLicense.Find(LocalDrivingLicenseApplicationID);
+
+            if (LocalDrivingLicenseApplication != null)
             {
-                if (clsLocalDrivingLicense.Delete(ID))
+                if (LocalDrivingLicenseApplication.Delete())
                 {
                     MessageBox.Show("Deleted Successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadTable();
                 }
                 else
                 {
                     MessageBox.Show("Don't Deleted Successfully", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-
-            LoadTable();
         }
     }
 }

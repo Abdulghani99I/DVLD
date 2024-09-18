@@ -18,7 +18,7 @@ namespace DVLD_DataAccess
         public enum enApplicationStatus { New=1, Cansel, Complated};
         enApplicationStatus applicationStatus = enApplicationStatus.New;
 
-        public int ApplicaitonID {  get; set; }
+        public int ApplicationID {  get; set; }
         public clsApplicationType.enApplicationTypes ApplicationType { get; set; }
         public int PersonID { get; set; }
         public enApplicationStatus ApplicationStatus {  get; set; }
@@ -34,7 +34,7 @@ namespace DVLD_DataAccess
         public clsApplication()
         
         {
-            this.ApplicaitonID = -1;
+            this.ApplicationID = -1;
             this.ApplicationType = 0;
             this.PersonID = -1;
             this.ApplicationStatus = 0;
@@ -50,7 +50,7 @@ namespace DVLD_DataAccess
             DateTime ApplicationDate, float PaidFees, int CreateByUserID)
 
         {
-            this.ApplicaitonID = ApplicaitonID;
+            this.ApplicationID = ApplicaitonID;
             this.ApplicationType = ApplicationType;
             this.PersonID = PersonID;
             this.PersonInfo = clsPerson.Find(PersonID);
@@ -66,9 +66,9 @@ namespace DVLD_DataAccess
         {
             //call DataAccess Layer 
 
-            this.ApplicaitonID = clsApplicationsData.AddNewApplication((int)ApplicationType, PersonID, ApplicationDate, LastStausDate, PaidFees, CreateByUserID);
+            this.ApplicationID = clsApplicationsData.AddNewApplication((int)ApplicationType, PersonID, ApplicationDate, LastStausDate, PaidFees, CreateByUserID);
 
-            return (this.ApplicaitonID != -1);
+            return (this.ApplicationID != -1);
         }
 
 
@@ -93,6 +93,17 @@ namespace DVLD_DataAccess
             }
 
             return false;
+        }
+
+        public static int GetActiveApplicationIDForLicenseClass(int PersonID, clsApplicationType.enApplicationTypes ApplicationTypeID, int LicenseClassID)
+        {
+            return clsApplicationsData.GetActiveApplicationIDForLicenseClass(PersonID, (int)ApplicationTypeID, LicenseClassID);
+        }
+
+
+        public bool Delete()
+        {
+            return clsApplicationsData.DeleteApplication(this.ApplicationID);
         }
 
         //private bool _UpdateUser()

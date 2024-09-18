@@ -61,83 +61,166 @@ namespace DVLD_DataAccess
             return ApplicaitonID;
         }
 
-        public static bool UpdateApplication(int ApplicationID, int ApplicationTypeID,
-                int PersonID, byte ApplicationStatus, DateTime ApplicationDate, float PaidFees, int CreateByUserID)
+        public static int GetActiveApplicationIDForLicenseClass(int PersonID, int ApplicationTypeID, int LicenseClassID)
         {
-            int rowsAffected = 0;
+            int ActiveApplicationID = -1;
+
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
-            string query = @"Update  Applicatinos  
-                            set ApplicationTypeID = @ApplicationTypeID,
-                                PersonID = @PersonID,
-                                ApplicationStatus = @ApplicationStatus
-                                ApplicationDate = @ApplicationDate
-                                PaidFees = @PaidFees
-                                CreateByUserID = @CreateByUserID
-                                where ApplicationID = @ApplicationID";
+            string query = @"SELECT ActiveApplicationID=Applications.ApplicationID
+                             FROM   Applications 
+                             		LEFT OUTER JOIN
+                                    LocalDrivingLicenseApplication ON Applications.ApplicationID = LocalDrivingLicenseApplication.ApplicationID
+                             		LEFT OUTER JOIN
+                                    ApplicationTypes ON Applications.ApplicationTypeID = ApplicationTypes.ApplicationTypeID
+                             WHERE
+                             		LocalDrivingLicenseApplication.LicenseClassID = @LicenseClassID AND
+                             		Applications.PersonID = @PersonID AND
+                             		ApplicationTypes.ApplicationTypeID = @ApplicationTypeID AND
+                             		Applications.ApplicationStatu = 1;";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+            command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+            try
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+
+                if (result != null && int.TryParse(result.ToString(), out int AppID))
+                {
+                    ActiveApplicationID = AppID;
+                }
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine("Error: " + ex.Message);
+                return ActiveApplicationID;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return ActiveApplicationID;
+        }
+
+        public static bool DeleteApplication(int ApplicationID)
+        {
+
+            int rowsAffected = 0;
+
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = @"Delete Applications 
+                             where ApplicationID = @ApplicationID";
 
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
-            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
-            command.Parameters.AddWithValue("@PersonID", PersonID);
-            command.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
-            command.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
-            command.Parameters.AddWithValue("@PaidFees", PaidFees);
-            command.Parameters.AddWithValue("@CreateByUserID", CreateByUserID);
-
 
             try
             {
                 connection.Open();
+
                 rowsAffected = command.ExecuteNonQuery();
 
             }
             catch (Exception ex)
             {
-                clsGlobal.LogError(ex.Message);
-                return false;
+                // Console.WriteLine("Error: " + ex.Message);
             }
-
             finally
             {
+
                 connection.Close();
+
             }
 
             return (rowsAffected > 0);
 
         }
 
-        public static DataTable GetAllABaseApplicaits()
-        {
-            DataTable dt = new DataTable();
+        //public static bool UpdateApplication(int ApplicationID, int ApplicationTypeID,
+        //        int PersonID, byte ApplicationStatus, DateTime ApplicationDate, float PaidFees, int CreateByUserID)
+        //{
+        //    int rowsAffected = 0;
+        //    SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
-            {
-                string query = @"select * from LocalDrivingLicenseApplications_View;";
+        //    string query = @"Update  Applicatinos  
+        //                    set ApplicationTypeID = @ApplicationTypeID,
+        //                        PersonID = @PersonID,
+        //                        ApplicationStatus = @ApplicationStatus
+        //                        ApplicationDate = @ApplicationDate
+        //                        PaidFees = @PaidFees
+        //                        CreateByUserID = @CreateByUserID
+        //                        where ApplicationID = @ApplicationID";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    try
-                    {
-                        connection.Open();
+        //    SqlCommand command = new SqlCommand(query, connection);
 
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                            {
-                                dt.Load(reader);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Console.WriteLine("Error: " + ex.Message);
-                    }
-                }
-            }
+        //    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+        //    command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+        //    command.Parameters.AddWithValue("@PersonID", PersonID);
+        //    command.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
+        //    command.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
+        //    command.Parameters.AddWithValue("@PaidFees", PaidFees);
+        //    command.Parameters.AddWithValue("@CreateByUserID", CreateByUserID);
 
-            return dt;
-        }
+
+        //    try
+        //    {
+        //        connection.Open();
+        //        rowsAffected = command.ExecuteNonQuery();
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        clsGlobal.LogError(ex.Message);
+        //        return false;
+        //    }
+
+        //    finally
+        //    {
+        //        connection.Close();
+        //    }
+
+        //    return (rowsAffected > 0);
+
+        //}
+
+        //public static DataTable GetAllABaseApplicaits()
+        //{
+        //    DataTable dt = new DataTable();
+
+        //    using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+        //    {
+        //        string query = @"select * from LocalDrivingLicenseApplications_View;";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            try
+        //            {
+        //                connection.Open();
+
+        //                using (SqlDataReader reader = command.ExecuteReader())
+        //                {
+        //                    if (reader.HasRows)
+        //                    {
+        //                        dt.Load(reader);
+        //                    }
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                // Console.WriteLine("Error: " + ex.Message);
+        //            }
+        //        }
+        //    }
+
+        //    return dt;
+        //}
     }
 }
