@@ -5,21 +5,21 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DVLD_Buisness.clsApplicationType;
 
 namespace DVLD_DataAccess
 {
     public class clsApplication
     {
+        public enum enMode { AddNew, Update}
         
-        enum enMode { AddNew, Update}
-        
-        enMode Mode = enMode.AddNew;
+        public enMode Mode = enMode.AddNew;
 
         public enum enApplicationStatus { New=1, Cansel, Complated};
         enApplicationStatus applicationStatus = enApplicationStatus.New;
 
         public int ApplicationID {  get; set; }
-        public clsApplicationType.enApplicationTypes ApplicationType { get; set; }
+        public clsApplicationType.enApplicationTypes ApplicationTypeID { get; set; }
         public int PersonID { get; set; }
         public enApplicationStatus ApplicationStatus {  get; set; }
         public DateTime ApplicationDate { get; set; }
@@ -29,13 +29,10 @@ namespace DVLD_DataAccess
 
         public clsPerson PersonInfo { get; set; }
 
-
-
         public clsApplication()
-        
         {
             this.ApplicationID = -1;
-            this.ApplicationType = 0;
+            this.ApplicationTypeID = 0;
             this.PersonID = -1;
             this.ApplicationStatus = 0;
             this.ApplicationDate = DateTime.MinValue;
@@ -46,18 +43,21 @@ namespace DVLD_DataAccess
             Mode = enMode.AddNew;
         }
 
-        private clsApplication(int ApplicaitonID, clsApplicationType.enApplicationTypes ApplicationType, int PersonID, byte ApplicationStatus,
-            DateTime ApplicationDate, float PaidFees, int CreateByUserID)
+        private clsApplication(int ApplicationID, int PersonID,
+            DateTime ApplicationDate, enApplicationTypes ApplicationTypeID,
+             enApplicationStatus ApplicationStatus, DateTime LastStatusDate,
+             float PaidFees, int CreatedByUserID)
 
         {
-            this.ApplicationID = ApplicaitonID;
-            this.ApplicationType = ApplicationType;
+            this.ApplicationID = ApplicationID;
+            this.ApplicationTypeID = ApplicationTypeID;
             this.PersonID = PersonID;
-            this.PersonInfo = clsPerson.Find(PersonID);
-            this.ApplicationStatus = 0;
+            this.PersonInfo = clsPerson.Find(this.PersonID);
+            this.ApplicationStatus = ApplicationStatus;
             this.ApplicationDate = ApplicationDate;
+            this.LastStausDate = LastStatusDate;
+            this.CreateByUserID = CreatedByUserID;
             this.PaidFees = PaidFees;
-            this.CreateByUserID = CreateByUserID;
 
             Mode = enMode.Update;
         }
@@ -66,11 +66,15 @@ namespace DVLD_DataAccess
         {
             //call DataAccess Layer 
 
-            this.ApplicationID = clsApplicationsData.AddNewApplication((int)ApplicationType, PersonID, ApplicationDate, LastStausDate, PaidFees, CreateByUserID);
+            this.ApplicationID = clsApplicationsData.AddNewApplication((int)ApplicationTypeID, PersonID, ApplicationDate, LastStausDate, PaidFees, CreateByUserID);
 
             return (this.ApplicationID != -1);
         }
 
+        private bool _UpdateApplication() 
+        {
+            return clsApplicationsData.UpdateApplication(this.ApplicationID, (byte)this.ApplicationTypeID, (byte)this.ApplicationStatus, this.ApplicationDate, this.PaidFees, this.CreateByUserID);
+        }
 
         public bool Save()
         {
@@ -87,9 +91,8 @@ namespace DVLD_DataAccess
                         return false;
                     }
 
-                //case enMode.Update:
-                //    return _UpdateUser();
-
+                case enMode.Update:
+                    return _UpdateApplication();
             }
 
             return false;
@@ -100,57 +103,32 @@ namespace DVLD_DataAccess
             return clsApplicationsData.GetActiveApplicationIDForLicenseClass(PersonID, (int)ApplicationTypeID, LicenseClassID);
         }
 
-
         public bool Delete()
         {
             return clsApplicationsData.DeleteApplication(this.ApplicationID);
         }
 
-        //private bool _UpdateUser()
-        //{
-        //    //call DataAccess Layer 
 
-        //    int ApplicationTypeID = -1, PersonID = -1, CreateByUserID = -1;
-        //    byte ApplicationStatus = 0;
-        //    DateTime ApplicationDate = DateTime.MinValue;
-        //    decimal PaidFees = 0;
+        public static clsApplication FindBaseApplication(int ApplicationID)
+        {
+            int ApplicantPersonID = -1;
+            DateTime ApplicationDate = DateTime.Now; int ApplicationTypeID = -1;
+            byte ApplicationStatus = 1; DateTime LastStatusDate = DateTime.Now;
+            float PaidFees = 0; int CreatedByUserID = -1;
 
+            bool IsFound = clsApplicationsData.GetApplicationInfoByID(
+                    ApplicationID, ref ApplicantPersonID, ref ApplicationDate, ref ApplicationTypeID,
+                    ref ApplicationStatus, ref LastStatusDate, ref PaidFees, ref CreatedByUserID);
 
-        //    return clsApplicationsData.UpdateApplication(ApplicationTypeID, PersonID, CreateByUserID,
-        //        ApplicationStatus, ApplicationDate, PaidFees);
-        //}
-
-        //public static clsUser FindByUserID(int UserID)
-        //{
-        //    int PersonID = -1;
-        //    string UserName = "", Password = "";
-        //    bool IsActive = false;
-
-        //    bool IsFound = clsUserData.GetUserInfoByUserID
-        //                        (UserID, ref PersonID, ref UserName, ref Password, ref IsActive);
-
-        //    if (IsFound)
-        //        //we return new object of that User with the right data
-        //        return new clsUser(UserID, PersonID, UserName, Password, IsActive);
-        //    else
-        //        return null;
-        //}
-
-        //public static clsUser FindByPersonID(int PersonID)
-        //{
-        //    int UserID = -1;
-        //    string UserName = "", Password = "";
-        //    bool IsActive = false;
-
-        //    bool IsFound = clsUserData.GetUserInfoByPersonID
-        //                        (PersonID, ref UserID, ref UserName, ref Password, ref IsActive);
-
-        //    if (IsFound)
-        //        //we return new object of that User with the right data
-        //        return new clsUser(UserID, UserID, UserName, Password, IsActive);
-        //    else
-        //        return null;
-        //}
+            if (IsFound)
+                //we return new object of that person with the right data
+                return new clsApplication(ApplicationID, ApplicantPersonID,
+                                     ApplicationDate, (enApplicationTypes)ApplicationTypeID,
+                                    (enApplicationStatus)ApplicationStatus, LastStatusDate,
+                                     PaidFees, CreatedByUserID);
+            else
+                return null;
+        }
 
     }
 }

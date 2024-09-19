@@ -12,7 +12,7 @@ namespace DVLD_Buisness
 {
     public class clsLicenseClass
     {
-        public int LicenseClassID { set; get; }
+        public byte LicenseClassID { set; get; }
 
         public string ClassName { set; get; }
 
@@ -27,7 +27,7 @@ namespace DVLD_Buisness
 
         public clsLicenseClass ()
         {
-            this.LicenseClassID = -1;
+            this.LicenseClassID = 0;
             this.ClassName = string.Empty;
             this.ClassDescription = string.Empty;
             this.MinimumAllowAge = byte.MinValue;
@@ -35,7 +35,7 @@ namespace DVLD_Buisness
             this.ClassFees = float.MinValue;
         }
 
-        private clsLicenseClass(int LicenseClassID, string ClassName, string ClassDescription, byte MinimumAllowAge, byte ValidityLength, float ClassFees)
+        private clsLicenseClass(byte LicenseClassID, string ClassName, string ClassDescription, byte MinimumAllowAge, byte ValidityLength, float ClassFees)
         {
             this.LicenseClassID = LicenseClassID;
             this.ClassName = ClassName;
@@ -52,7 +52,7 @@ namespace DVLD_Buisness
 
         public static clsLicenseClass Find(string ClassName)
         {
-            int LicenseClassID = -1;
+            byte LicenseClassID = 0;
             string Description = string.Empty;
             byte MinimumAllowAge = byte.MinValue;
             byte ValidityLength = byte.MinValue;
@@ -70,7 +70,7 @@ namespace DVLD_Buisness
             }
         }
 
-        public static clsLicenseClass Find(int LicenseClassID)
+        public static clsLicenseClass Find(byte LicenseClassID)
         {
             string ClassName = string.Empty;
             string Description = string.Empty;

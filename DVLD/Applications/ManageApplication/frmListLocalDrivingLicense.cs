@@ -57,7 +57,7 @@ namespace DVLD.Applications.DrivingLicensesServices
 
         private void LoadTable()
         {
-            _dtLicenseApplications = clsLocalDrivingLicense.GetAllLocalDrivingLicenses();
+            _dtLicenseApplications = clsLocalDrivingLicenseApplication.GetAllLocalDrivingLicenses();
             dgvLicenseApplications.DataSource = _dtLicenseApplications;
             lblRecordsCount.Text = _dtLicenseApplications.Rows.Count.ToString();
         }
@@ -156,8 +156,8 @@ namespace DVLD.Applications.DrivingLicensesServices
 
             int LocalDrivingLicenseApplicationID = (int)dgvLicenseApplications.CurrentRow.Cells[0].Value;
 
-            clsLocalDrivingLicense LocalDrivingLicenseApplication =
-                clsLocalDrivingLicense.Find(LocalDrivingLicenseApplicationID);
+            clsLocalDrivingLicenseApplication LocalDrivingLicenseApplication =
+                clsLocalDrivingLicenseApplication.Find(LocalDrivingLicenseApplicationID);
 
             if (LocalDrivingLicenseApplication != null)
             {
@@ -171,6 +171,17 @@ namespace DVLD.Applications.DrivingLicensesServices
                     MessageBox.Show("Don't Deleted Successfully", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int LocalDrivingLicenseApplicationID = (int)dgvLicenseApplications.CurrentRow.Cells[0].Value;
+
+            frmAddUpdateLocalDrivingLicense frm = new frmAddUpdateLocalDrivingLicense(LocalDrivingLicenseApplicationID);
+
+            frm.ShowDialog();
+
+            LoadTable();
         }
     }
 }

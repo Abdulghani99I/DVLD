@@ -49,7 +49,7 @@ namespace DVLD_DataAccess
 
         }
 
-        public static bool GetLicenseClassByClassName(string ClassName, ref int LicenseClassID, ref string ClassDescription, ref byte MinimumAllowAge, ref byte ValidityLength, ref float ClassFees)
+        public static bool GetLicenseClassByClassName(string ClassName, ref byte LicenseClassID, ref string ClassDescription, ref byte MinimumAllowAge, ref byte ValidityLength, ref float ClassFees)
         {
             bool isFound = false;
 
@@ -69,7 +69,7 @@ namespace DVLD_DataAccess
                         {
                             if (reader.Read())
                             {
-                                LicenseClassID = (int) reader["LicenseClassID"];
+                                LicenseClassID = byte.Parse(reader["LicenseClassID"].ToString());
                                 ClassDescription = (string) reader["ClassDescription"];
                                 MinimumAllowAge = (byte) reader["MinimumAllowAge"];
                                 ValidityLength = (byte) reader["ValidityLength"];

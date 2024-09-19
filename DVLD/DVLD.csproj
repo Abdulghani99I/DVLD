@@ -46,17 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Applications\DrivingLicensesServices\frmListLocalDrivingLicense.cs">
+    <Compile Include="Applications\ManageApplication\frmListLocalDrivingLicense.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Applications\DrivingLicensesServices\frmListLocalDrivingLicense.Designer.cs">
+    <Compile Include="Applications\ManageApplication\frmListLocalDrivingLicense.Designer.cs">
       <DependentUpon>frmListLocalDrivingLicense.cs</DependentUpon>
     </Compile>
-    <Compile Include="Applications\DrivingLicensesServices\frmAddNewLocalDrivingLicense.cs">
+    <Compile Include="Applications\DrivingLicensesServices\frmAddUpdateLocalDrivingLicense.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Applications\DrivingLicensesServices\frmAddNewLocalDrivingLicense.Designer.cs">
-      <DependentUpon>frmAddNewLocalDrivingLicense.cs</DependentUpon>
+    <Compile Include="Applications\DrivingLicensesServices\frmAddUpdateLocalDrivingLicense.Designer.cs">
+      <DependentUpon>frmAddUpdateLocalDrivingLicense.cs</DependentUpon>
     </Compile>
     <Compile Include="Applications\ManageTestTypes\frmUpdateTestType.cs">
       <SubType>Form</SubType>
@@ -165,11 +165,11 @@
     <Compile Include="User\frmUserInfo.Designer.cs">
       <DependentUpon>frmUserInfo.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Applications\DrivingLicensesServices\frmListLocalDrivingLicense.resx">
+    <EmbeddedResource Include="Applications\ManageApplication\frmListLocalDrivingLicense.resx">
       <DependentUpon>frmListLocalDrivingLicense.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Applications\DrivingLicensesServices\frmAddNewLocalDrivingLicense.resx">
-      <DependentUpon>frmAddNewLocalDrivingLicense.cs</DependentUpon>
+    <EmbeddedResource Include="Applications\DrivingLicensesServices\frmAddUpdateLocalDrivingLicense.resx">
+      <DependentUpon>frmAddUpdateLocalDrivingLicense.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\ManageTestTypes\frmUpdateTestType.resx">
       <DependentUpon>frmUpdateTestType.cs</DependentUpon>
@@ -576,7 +576,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Applications\DetainLicenses\" />
-    <Folder Include="Applications\ManageApplication\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

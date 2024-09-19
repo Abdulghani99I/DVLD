@@ -144,52 +144,51 @@ namespace DVLD_DataAccess
 
         }
 
-        //public static bool UpdateApplication(int ApplicationID, int ApplicationTypeID,
-        //        int PersonID, byte ApplicationStatus, DateTime ApplicationDate, float PaidFees, int CreateByUserID)
-        //{
-        //    int rowsAffected = 0;
-        //    SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
-        //    string query = @"Update  Applicatinos  
-        //                    set ApplicationTypeID = @ApplicationTypeID,
-        //                        PersonID = @PersonID,
-        //                        ApplicationStatus = @ApplicationStatus
-        //                        ApplicationDate = @ApplicationDate
-        //                        PaidFees = @PaidFees
-        //                        CreateByUserID = @CreateByUserID
-        //                        where ApplicationID = @ApplicationID";
+        public static bool UpdateApplication(int ApplicationID, byte ApplicationTypeID,
+        byte ApplicationStatu, DateTime LastStatuDate, float PaidFees, int CreatedByUserID)
+        {
+            int rowsAffected = 0;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
-        //    SqlCommand command = new SqlCommand(query, connection);
+            string query = @"Update  Applications  
+                            set ApplicationTypeID = @ApplicationTypeID,
+                                ApplicationStatu = @ApplicationStatu,
+                                LastStatuDate = @LastStatuDate,
+                                PaidFees = @PaidFees,
+                                CreatedByUserID = @CreatedByUserID
+                                where ApplicationID = @ApplicationID;";
 
-        //    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
-        //    command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
-        //    command.Parameters.AddWithValue("@PersonID", PersonID);
-        //    command.Parameters.AddWithValue("@ApplicationStatus", ApplicationStatus);
-        //    command.Parameters.AddWithValue("@ApplicationDate", ApplicationDate);
-        //    command.Parameters.AddWithValue("@PaidFees", PaidFees);
-        //    command.Parameters.AddWithValue("@CreateByUserID", CreateByUserID);
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+            command.Parameters.AddWithValue("@ApplicationStatu", ApplicationStatu);
+            command.Parameters.AddWithValue("@LastStatuDate", LastStatuDate);
+            command.Parameters.AddWithValue("@PaidFees", PaidFees);
+            command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
+            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
 
 
-        //    try
-        //    {
-        //        connection.Open();
-        //        rowsAffected = command.ExecuteNonQuery();
+            try
+            {
+                connection.Open();
+                rowsAffected = command.ExecuteNonQuery();
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        clsGlobal.LogError(ex.Message);
-        //        return false;
-        //    }
+            }
+            catch (Exception ex)
+            {
+                clsGlobal.LogError(ex.Message);
+                return false;
+            }
 
-        //    finally
-        //    {
-        //        connection.Close();
-        //    }
+            finally
+            {
+                connection.Close();
+            }
 
-        //    return (rowsAffected > 0);
+            return (rowsAffected > 0);
 
-        //}
+        }
 
         //public static DataTable GetAllABaseApplicaits()
         //{
@@ -222,5 +221,60 @@ namespace DVLD_DataAccess
 
         //    return dt;
         //}
+
+        public static bool GetApplicationInfoByID(int ApplicationID,
+        ref int PersonID, ref DateTime ApplicationDate, ref int ApplicationTypeID,
+        ref byte ApplicationStatu, ref DateTime LastStatusDate,
+        ref float PaidFees, ref int CreatedByUserID)
+        {
+            bool isFound = false;
+
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = "SELECT * FROM Applications WHERE ApplicationID = @ApplicationID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    // The record was found
+                    isFound = true;
+
+                    PersonID = (int)reader["PersonID"];
+                    ApplicationDate = (DateTime)reader["ApplicationDate"];
+                    ApplicationTypeID = (int)reader["ApplicationTypeID"];
+                    ApplicationStatu = (byte)reader["ApplicationStatu"];
+                    LastStatusDate = (DateTime)reader["LastStatuDate"];
+                    PaidFees = Convert.ToSingle(reader["PaidFees"]);
+                    CreatedByUserID = (int)reader["CreatedByUserID"];
+                }
+                else
+                {
+                    // The record was not found
+                    isFound = false;
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine("Error: " + ex.Message);
+                isFound = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return isFound;
+        }
+
     }
 }
