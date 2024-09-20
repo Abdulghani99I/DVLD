@@ -58,7 +58,6 @@ namespace DVLD_Buisness
             base.Mode = clsApplication.enMode.Update;
         }
 
-
         public static clsLocalDrivingLicenseApplication Find(int LocalDrivingLicenseApplicationID)
         {
             int ApplicationID = -1, LicenseClassID = -1;

@@ -15,11 +15,11 @@ namespace DVLD_DataAccess
         
         public enMode Mode = enMode.AddNew;
 
-        public enum enApplicationStatus { New=1, Cansel, Complated};
+        public enum enApplicationStatus { New=1, Cancelled, Completed};
         enApplicationStatus applicationStatus = enApplicationStatus.New;
 
         public int ApplicationID {  get; set; }
-        public clsApplicationType.enApplicationTypes ApplicationTypeID { get; set; }
+        public enApplicationTypes ApplicationTypeID { get; set; }
         public int PersonID { get; set; }
         public enApplicationStatus ApplicationStatus {  get; set; }
         public DateTime ApplicationDate { get; set; }
@@ -28,6 +28,27 @@ namespace DVLD_DataAccess
         public int CreateByUserID { get; set; }
 
         public clsPerson PersonInfo { get; set; }
+        public clsUser UserInfo { get; set; }
+
+        public clsApplicationType ApplicationType { get; set; }
+
+        public string StatusText
+        {
+            get
+            {
+                switch (ApplicationStatus)
+                {
+                    case enApplicationStatus.New:
+                        return "New";
+                    case enApplicationStatus.Cancelled:
+                        return "Cancelled";
+                    case enApplicationStatus.Completed:
+                        return "Completed";
+                    default:
+                        return "Unknown";
+                }
+            }
+        }
 
         public clsApplication()
         {
@@ -51,13 +72,15 @@ namespace DVLD_DataAccess
         {
             this.ApplicationID = ApplicationID;
             this.ApplicationTypeID = ApplicationTypeID;
+            this.ApplicationType = clsApplicationType.Find((int)this.ApplicationTypeID);
             this.PersonID = PersonID;
             this.PersonInfo = clsPerson.Find(this.PersonID);
             this.ApplicationStatus = ApplicationStatus;
             this.ApplicationDate = ApplicationDate;
             this.LastStausDate = LastStatusDate;
-            this.CreateByUserID = CreatedByUserID;
             this.PaidFees = PaidFees;
+            this.CreateByUserID = CreatedByUserID;
+            this.UserInfo = clsUser.FindByUserID(this.CreateByUserID);
 
             Mode = enMode.Update;
         }

@@ -1,4 +1,5 @@
-﻿using DVLD.Classes;
+﻿using DVLD.Applications.ManageApplication;
+using DVLD.Classes;
 using DVLD_Buisness;
 using System;
 using System.Collections.Generic;
@@ -182,6 +183,14 @@ namespace DVLD.Applications.DrivingLicensesServices
             frm.ShowDialog();
 
             LoadTable();
+        }
+
+        private void showDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int LocalDrivingLicenseApplicationID = (int)dgvLicenseApplications.CurrentRow.Cells[0].Value;
+
+            frmShowDetailsApplication frm = new frmShowDetailsApplication(LocalDrivingLicenseApplicationID);
+            frm.ShowDialog();
         }
     }
 }

@@ -62,3 +62,6 @@ D:\DVLD\DVLD\obj\Debug\DVLD.csproj.CoreCompileInputs.cache
 D:\DVLD\DVLD\obj\Debug\DVLD.csproj.CopyComplete
 D:\DVLD\DVLD\obj\Debug\DVLD.exe
 D:\DVLD\DVLD\obj\Debug\DVLD.pdb
+D:\DVLD\DVLD\obj\Debug\DVLD.Controls.ApplicationControls.ctrlApplicationBasicInfo.resources
+D:\DVLD\DVLD\obj\Debug\DVLD.Controls.ApplicationControls.ctrlDrivingLicenseApplicationInfo.resources
+D:\DVLD\DVLD\obj\Debug\DVLD.Applications.ManageApplication.frmShowDetailsApplication.resources
