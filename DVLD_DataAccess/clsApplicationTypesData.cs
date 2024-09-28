@@ -55,7 +55,7 @@ namespace DVLD_DataAccess
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+                    command.Parameters.AddWithValue("@ApplicationTypesID", ApplicationTypeID);
                     try
                     {
                         connection.Open();

@@ -75,12 +75,12 @@ namespace DVLD.Controls.ApplicationControls
 
         private void llViewPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //frmShowPersonInfo frm = new frmShowPersonInfo(_Application.PersonID); ;
-            //frm.ShowDialog();
+            frmShowPersonInfo frm = new frmShowPersonInfo(_Application.PersonID); ;
+            frm.ShowDialog();
 
             //Refresh
             LoadApplicationInfo(_ApplicationID);
-
         }
+
     }
 }

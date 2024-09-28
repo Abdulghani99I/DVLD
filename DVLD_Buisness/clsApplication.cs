@@ -121,6 +121,7 @@ namespace DVLD_DataAccess
             return false;
         }
 
+
         public static int GetActiveApplicationIDForLicenseClass(int PersonID, clsApplicationType.enApplicationTypes ApplicationTypeID, int LicenseClassID)
         {
             return clsApplicationsData.GetActiveApplicationIDForLicenseClass(PersonID, (int)ApplicationTypeID, LicenseClassID);
@@ -130,7 +131,6 @@ namespace DVLD_DataAccess
         {
             return clsApplicationsData.DeleteApplication(this.ApplicationID);
         }
-
 
         public static clsApplication FindBaseApplication(int ApplicationID)
         {

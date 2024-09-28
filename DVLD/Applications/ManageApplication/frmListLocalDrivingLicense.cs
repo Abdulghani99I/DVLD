@@ -1,10 +1,13 @@
 ﻿using DVLD.Applications.ManageApplication;
 using DVLD.Classes;
+using DVLD.Test;
 using DVLD_Buisness;
+using DVLD_DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Deployment.Internal;
 using System.Drawing;
 using System.Linq;
 using System.Management.Instrumentation;
@@ -48,11 +51,11 @@ namespace DVLD.Applications.DrivingLicensesServices
                 dgvLicenseApplications.Columns[4].HeaderText = "Application Date";
                 dgvLicenseApplications.Columns[4].Width = 180;
 
-                dgvLicenseApplications.Columns[5].HeaderText = "Passed Tests";
-                dgvLicenseApplications.Columns[5].Width = 130;
+                dgvLicenseApplications.Columns[5].HeaderText = "Status";
+                dgvLicenseApplications.Columns[5].Width = 100;
 
-                dgvLicenseApplications.Columns[6].HeaderText = "Status";
-                dgvLicenseApplications.Columns[6].Width = 100;
+                dgvLicenseApplications.Columns[6].HeaderText = "Passed Tests";
+                dgvLicenseApplications.Columns[6].Width = 130;
             }
         }
 
@@ -190,6 +193,81 @@ namespace DVLD.Applications.DrivingLicensesServices
             int LocalDrivingLicenseApplicationID = (int)dgvLicenseApplications.CurrentRow.Cells[0].Value;
 
             frmShowDetailsApplication frm = new frmShowDetailsApplication(LocalDrivingLicenseApplicationID);
+            frm.ShowDialog();
+        }
+
+        private void cmsApplications_Opening(object sender, CancelEventArgs e)
+        {
+            string Status = dgvLicenseApplications.CurrentRow.Cells[5].Value.ToString();
+
+            switch (Status)
+            {
+                case "New":
+                    byte PassedTest = byte.Parse(dgvLicenseApplications.CurrentRow.Cells[6].Value.ToString());
+                    //showDetailsToolStripMenuItem.Enabled = true;
+                    editToolStripMenuItem.Enabled = true;
+                    DeleteToolStripMenuItem.Enabled = true;
+                    CancelApplicaitonToolStripMenuItem.Enabled = true;
+
+                    ScheduleTestsMenueToolStripMenuItem.Enabled = true;
+                    scheduleVisionTestToolStripMenuItem.Enabled = true;
+                    if (PassedTest == 1)
+                        ScheduleWrittenTesttoolStripMenuItem.Enabled = true;
+                    else
+                        ScheduleWrittenTesttoolStripMenuItem.Enabled = false;
+                    if (PassedTest == 2)
+                        ScheduleStreetTesttoolStripMenuItem.Enabled = true;
+                    else
+                        ScheduleStreetTesttoolStripMenuItem.Enabled = false;
+
+                    IssueDrivingtoolStripMenuItem.Enabled = false;
+                    showLicenseToolStripMenuItem.Enabled = false;
+                    //showPersonLicenseHistoryToolStripMenuItem.Enabled = true;
+                    break;
+                case "Cancel":
+                    //showDetailsToolStripMenuItem.Enabled = true;
+                    editToolStripMenuItem.Enabled = false;
+                    DeleteToolStripMenuItem.Enabled = true;
+                    CancelApplicaitonToolStripMenuItem.Enabled = false;
+                    ScheduleTestsMenueToolStripMenuItem.Enabled = false;
+                    IssueDrivingtoolStripMenuItem.Enabled = false;
+                    showLicenseToolStripMenuItem.Enabled = false;
+                    //showPersonLicenseHistoryToolStripMenuItem.Enabled = true;
+                    break;
+                case "Completed":
+                    //showDetailsToolStripMenuItem.Enabled = true;
+                    editToolStripMenuItem.Enabled = false;
+                    DeleteToolStripMenuItem.Enabled = false;
+                    CancelApplicaitonToolStripMenuItem.Enabled = false;
+                    ScheduleTestsMenueToolStripMenuItem.Enabled = false;
+                    IssueDrivingtoolStripMenuItem.Enabled = false;
+                    showLicenseToolStripMenuItem.Enabled = true;
+                    //showPersonLicenseHistoryToolStripMenuItem.Enabled = true;
+                    break;
+            }
+
+        }
+
+        private void CancelApplicaitonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int LocalDrivingLicenseApplicationID = (int)dgvLicenseApplications.CurrentRow.Cells[0].Value;
+
+            if (MessageBox.Show($"Are you sure wan't to cnacel this [L.D.L.AppID = {LocalDrivingLicenseApplicationID}] ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                return;
+            }
+
+            int ApplicationID = clsLocalDrivingLicenseApplication.Find(LocalDrivingLicenseApplicationID).ApplicationID;
+            clsLocalDrivingLicenseApplication.CancelApplicationByID(ApplicationID);
+            LoadTable();
+        }
+
+        private void scheduleVisionTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int LocalDrivingLicenseApplicationID = (int)dgvLicenseApplications.CurrentRow.Cells[0].Value;
+
+            frmListTestAppointments frm = new frmListTestAppointments(LocalDrivingLicenseApplicationID);
+
             frm.ShowDialog();
         }
     }

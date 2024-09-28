@@ -82,7 +82,6 @@ namespace DVLD.Controls.ApplicationControls
             ctrlApplicationBasicInfo1.LoadApplicationInfo(_LocalDrivingLicenseApplication.ApplicationID);
             lblLocalDrivingLicenseApplicationID.Text = _LocalDrivingLicenseApplication.LocalDrivingLicenseApplicationID.ToString();
             lblAppliedFor.Text = clsLicenseClass.Find(_LocalDrivingLicenseApplication.LicensesClassID).ClassName;
-
         }
 
         private void _ResetLocalDrivingLicenseApplicationInfo()

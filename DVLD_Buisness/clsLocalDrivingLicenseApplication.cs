@@ -144,5 +144,10 @@ namespace DVLD_Buisness
                 return false;
             }
         }
+
+        public static bool CancelApplicationByID(int ApplicationID)
+        {
+            return clsApplicationsData.CancelApplicationByID(ApplicationID);
+        }
     }
 }

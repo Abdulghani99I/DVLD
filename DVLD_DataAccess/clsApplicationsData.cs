@@ -144,52 +144,6 @@ namespace DVLD_DataAccess
 
         }
 
-
-        public static bool UpdateApplication(int ApplicationID, byte ApplicationTypeID,
-        byte ApplicationStatu, DateTime LastStatuDate, float PaidFees, int CreatedByUserID)
-        {
-            int rowsAffected = 0;
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
-
-            string query = @"Update  Applications  
-                            set ApplicationTypeID = @ApplicationTypeID,
-                                ApplicationStatu = @ApplicationStatu,
-                                LastStatuDate = @LastStatuDate,
-                                PaidFees = @PaidFees,
-                                CreatedByUserID = @CreatedByUserID
-                                where ApplicationID = @ApplicationID;";
-
-            SqlCommand command = new SqlCommand(query, connection);
-
-            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
-            command.Parameters.AddWithValue("@ApplicationStatu", ApplicationStatu);
-            command.Parameters.AddWithValue("@LastStatuDate", LastStatuDate);
-            command.Parameters.AddWithValue("@PaidFees", PaidFees);
-            command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
-            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
-
-
-            try
-            {
-                connection.Open();
-                rowsAffected = command.ExecuteNonQuery();
-
-            }
-            catch (Exception ex)
-            {
-                clsGlobal.LogError(ex.Message);
-                return false;
-            }
-
-            finally
-            {
-                connection.Close();
-            }
-
-            return (rowsAffected > 0);
-
-        }
-
         //public static DataTable GetAllABaseApplicaits()
         //{
         //    DataTable dt = new DataTable();
@@ -274,6 +228,85 @@ namespace DVLD_DataAccess
             }
 
             return isFound;
+        }
+        public static bool UpdateApplication(int ApplicationID, byte ApplicationTypeID,
+        byte ApplicationStatu, DateTime LastStatuDate, float PaidFees, int CreatedByUserID)
+        {
+            int rowsAffected = 0;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = @"Update  Applications  
+                            set ApplicationTypeID = @ApplicationTypeID,
+                                ApplicationStatu = @ApplicationStatu,
+                                LastStatuDate = @LastStatuDate,
+                                PaidFees = @PaidFees,
+                                CreatedByUserID = @CreatedByUserID
+                                where ApplicationID = @ApplicationID;";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@ApplicationTypeID", ApplicationTypeID);
+            command.Parameters.AddWithValue("@ApplicationStatu", ApplicationStatu);
+            command.Parameters.AddWithValue("@LastStatuDate", LastStatuDate);
+            command.Parameters.AddWithValue("@PaidFees", PaidFees);
+            command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
+            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+
+            try
+            {
+                connection.Open();
+                rowsAffected = command.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                clsGlobal.LogError(ex.Message);
+                return false;
+            }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return (rowsAffected > 0);
+
+        }
+
+
+        public static bool CancelApplicationByID(int ApplicationID)
+        {
+            int rowsAffected = 0;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = @"Update  Applications  
+                            set ApplicationStatu = 2
+                                where ApplicationID = @ApplicationID;";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+            try
+            {
+                connection.Open();
+                rowsAffected = command.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                clsGlobal.LogError(ex.Message);
+                return false;
+            }
+
+            finally
+            {
+                connection.Close();
+            }
+
+            return (rowsAffected > 0);
+
         }
 
     }

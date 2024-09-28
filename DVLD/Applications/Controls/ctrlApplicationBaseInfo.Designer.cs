@@ -74,6 +74,7 @@
             this.llViewPersonInfo.TabIndex = 187;
             this.llViewPersonInfo.TabStop = true;
             this.llViewPersonInfo.Text = "View Person Info.";
+            this.llViewPersonInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llViewPersonInfo_LinkClicked);
             // 
             // lblStatusDate
             // 
@@ -365,14 +366,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Application Basic Info";
             // 
-            // ctrlApplicationBaseInfo
+            // ctrlApplicationBasicInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Name = "ctrlApplicationBaseInfo";
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "ctrlApplicationBasicInfo";
             this.Size = new System.Drawing.Size(852, 220);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
